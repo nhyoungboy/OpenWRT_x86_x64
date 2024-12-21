@@ -25,15 +25,25 @@ env:
   TZ: Asia/Shanghai
 
 jobs:
-  Build:
-    runs-on: self-hosted
-    outputs:
-      OPENWRTROOT: ${{ steps.update.outputs.OPENWRTROOT }}
-      PLATFORM: ${{ steps.compile.outputs.PLATFORM }}
-      TARGET: ${{ steps.compile.outputs.TARGET }}
-      SUBTARGET: ${{ steps.compile.outputs.SUBTARGET }}
-      FIRMWARE: ${{ steps.compile.outputs.FIRMWARE }}
-      GENERATE_STATUS: ${{ steps.generate.outputs.GENERATE_STATUS }}
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Free Disk Space (Ubuntu)
+      uses: jlumbroso/free-disk-space@main
+      with:
+        # this might remove tools that are actually needed,
+        # if set to "true" but frees about 6 GB
+        tool-cache: true
+        
+        # all of these default to true, but feel free to set to
+        # "false" if necessary for your workflow
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        docker-images: true
+        swap-storage: true
 
     steps:
     - name: Checkout
